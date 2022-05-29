@@ -30,6 +30,20 @@ const userSchema = new Schema({
     // it can only be 1 of the specified values in the enum array
     enum: ['Admin', 'Employee', 'Manager'],
   },
+  // hobbies
+  hobbies: [ String ],
+  twoFavoritePedals: {
+    firstFavorite: {
+      type: String,
+      uppercase: true,
+      trim: true,
+    },
+    secondFavorite: {
+      type: String,
+      uppercase: true,
+      trim: true,
+    },
+  }
 });
 
 const User = model('User', userSchema);

@@ -4,6 +4,7 @@ const { createUser,
   getUserById,
   updateUserById,
   deleteUserById,
+  addHobbyToUserById,
   } = require('../../../controllers/userController');
 
 // /api/users prepends to every route
@@ -13,6 +14,8 @@ const { createUser,
 router.route ('/')
   .get(getAllUsers)
   .post(createUser);
+
+  router.put('/addHobby/:userId', addHobbyToUserById);
 
   router.route('/:userId')
     .get(getUserById)
