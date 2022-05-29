@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const {
+  Blog,
   User,
   Todo
 } = require('./model');
@@ -8,6 +9,7 @@ const {
 
 const seedDb = async () => {
   await mongoose.connect('mongodb://localhost:27017/mongoAppTodo');
+  await Blog.deleteMany({});
   await User.deleteMany({});
   await Todo.deleteMany({});
 
@@ -91,7 +93,30 @@ const todosToCreate = [
 
 const todos = await Todo.insertMany(todosToCreate);
 
-console.log(todos);
+const blogsToCreate = [
+  {
+    description: faker.lorem.paragraph(),
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+  {
+    description: faker.lorem.paragraph(),
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+  {
+    description: faker.lorem.paragraph(),
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+];
+
+const blogs = await Blog.insertMany(blogsToCreate);
+
+const employees = await User.findByRole('Employee');
+
+employees.forEach(employee => employee.greeting());
+
+console.log(employees);
+
+// console.log(blogs);
 
 // Math.floor(Math.random() * users.length);
 
