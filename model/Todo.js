@@ -7,6 +7,7 @@ const todoSchema = new Schema({
     type: Schema.Types.ObjectId,
     // Ref means which Collection does this ObjectId reference?
     ref: 'User',
+    index: true,
   },
   text: {
     type: String,
