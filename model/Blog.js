@@ -6,6 +6,12 @@ const blogSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  likeIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Like',
+    }
+  ],
   description: {
     type: String,
   }

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const {
   Blog,
+  Like,
   User,
   Todo
 } = require('./model');
@@ -10,6 +11,7 @@ const {
 const seedDb = async () => {
   await mongoose.connect('mongodb://localhost:27017/mongoAppTodo');
   await Blog.deleteMany({});
+  await Like.deleteMany({});
   await User.deleteMany({});
   await Todo.deleteMany({});
 
@@ -109,6 +111,57 @@ const blogsToCreate = [
 ];
 
 const blogs = await Blog.insertMany(blogsToCreate);
+
+const likesToCreate = [
+  {
+    userId: users[0]._id,
+  },
+  {
+    userId: users[0]._id,
+  },
+  {
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+  {
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+  {
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+  {
+    userId: users[Math.floor(Math.random() * users.length)]._id,
+  },
+];
+
+const [like1, like2] = await Like.insertMany(likesToCreate);
+const firstBlog = blogs[0];
+
+
+const updatedBlog = await Blog.findByIdAndUpdate(
+  firstBlog._id,
+  {
+    $addToSet: {
+      likeIds: [ like1, like1]
+    },
+  },
+  {
+    new: true,
+  }
+).populate({
+  path: 'likeIds',
+  populate: 'userId',
+});
+console.log(updatedBlog.likeIds);
+
+
+// firstBlog.likeIds.push(like1);
+// firstBlog.likeIds.push(like2);
+
+// await firstBlog.save();
+
+// console.log(firstBlog);
+
+
 
 const employees = await User.findByRole('Employee');
 
