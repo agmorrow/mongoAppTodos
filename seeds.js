@@ -136,12 +136,12 @@ const likesToCreate = [
 const [like1, like2] = await Like.insertMany(likesToCreate);
 const firstBlog = blogs[0];
 
-
+// How to add a like
 const updatedBlog = await Blog.findByIdAndUpdate(
   firstBlog._id,
   {
     $addToSet: {
-      likeIds: [ like1, like1]
+      likeIds: [ like1, like2 ]
     },
   },
   {
@@ -151,7 +151,25 @@ const updatedBlog = await Blog.findByIdAndUpdate(
   path: 'likeIds',
   populate: 'userId',
 });
-console.log(updatedBlog.likeIds);
+
+console.log('After adding', updatedBlog.likeIds);
+
+// How to delete a like
+const updatedBlogPartTwo = await Blog.findByIdAndUpdate(
+  firstBlog._id,
+  {
+    $pull: {
+      likeIds: like1._id,
+    },
+  },
+  {
+    new: true,
+  }
+).populate({
+  path: 'likeIds',
+  populate: 'userId',
+});
+console.log('After removing', updatedBlogPartTwo.likeIds);
 
 
 // firstBlog.likeIds.push(like1);
