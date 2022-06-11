@@ -136,6 +136,11 @@ const likesToCreate = [
 const [like1, like2] = await Like.insertMany(likesToCreate);
 const firstBlog = blogs[0];
 
+
+// -1 descending from highest to lowest
+// 1 ascending from lowest to highest
+// const blogs = wait Blog,find({}).sort({ description: -1 });
+
 // How to add a like
 const updatedBlog = await Blog.findByIdAndUpdate(
   firstBlog._id,
