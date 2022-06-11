@@ -32,6 +32,12 @@ const userSchema = new Schema({
     // it can only be 1 of the specified values in the enum array
     enum: ['Admin', 'Employee', 'Manager'],
   },
+  todoIds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Todo'
+    }
+  ],
 
 }, {
   toJSON: {
@@ -42,6 +48,12 @@ id: false,
     
 userSchema.virtual('fullName').get(function() {
 return `${this.firstName} ${this.lastName}`;
+});
+
+userSchema.virtual('fullName').set(function(currentValueBeingSet, theObjectWeCallSetOn, documentBeingSaved) {
+  console.log(currentValueBeingSet, 48);
+  console.log(theObjectWeCallSetOn, 49);
+  console.log(documentBeingSaved, 50);
 });
 
 //Model methods

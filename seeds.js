@@ -215,12 +215,18 @@ const cole = await User.create({
   email: 'cole@morrow.com'
 });
 
-const users = await User.find({});
+let foundAustin = await User.findById(austin._id);
+
+// foundAustin = foundAustin.toObject({ virtuals: true });
+
+console.log(foundAustin);
+
+// const users = await User.find({});
 
 
 // console.log(JSON.parse(JSON.stringify(users)));
 
-console.log(users);
+// console.log(users);
 
   process.exit(0);
 };
