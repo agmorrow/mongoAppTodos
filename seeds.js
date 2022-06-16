@@ -217,9 +217,32 @@ const cole = await User.create({
 
 let foundAustin = await User.findById(austin._id);
 
+const todos = await Todo.insertMany([
+  {
+    userId: foundAustin._id,
+    text: 'Drive to Lighthouse'
+  },
+  {
+    userId: foundAustin._id,
+    text: 'Do a GitPush'
+  },
+  {
+    userId: foundAustin._id,
+    text: 'Watch Goofy Movie'
+  },
+]);
+
+foundAustin.todoIds = todos;
+
+await foundAustin.save();
+
+const austinmorrow = await User.findById(foundAustin._id).populate('todoIds');
+
+console.log(austinmorrow);
+
 // foundAustin = foundAustin.toObject({ virtuals: true });
 
-console.log(foundAustin);
+
 
 // const users = await User.find({});
 
